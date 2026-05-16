@@ -38,7 +38,7 @@ For Vercel, import the repository as a static project and keep the output direct
 
 ## Before Launch
 
-- Replace `https://example.com` in `sitemap.xml` with your real domain.
+- Update canonical URLs and `sitemap.xml` again if you later connect a custom domain.
 - Replace starter legal copy in `privacy.html` and `terms.html`.
 - Add cloud accounts and encrypted backend storage if users need sync across devices.
 - Add real issuer integrations if you want automatic pass importing.
