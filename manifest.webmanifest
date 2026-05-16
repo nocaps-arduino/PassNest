@@ -1,0 +1,19 @@
+{
+  "name": "PassNest",
+  "short_name": "PassNest",
+  "description": "A private digital wallet for boarding passes, tickets, and service cards.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07080b",
+  "theme_color": "#07080b",
+  "categories": ["travel", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

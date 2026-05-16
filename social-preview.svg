@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="PassNest preview">
+  <rect width="1200" height="630" fill="#07080b"/>
+  <circle cx="220" cy="82" r="260" fill="#0a84ff" opacity=".22"/>
+  <circle cx="1030" cy="120" r="240" fill="#ff375f" opacity=".18"/>
+  <text x="86" y="130" fill="#a8adb7" font-family="Arial, sans-serif" font-size="34" font-weight="700">DIGITAL PASS WALLET</text>
+  <text x="86" y="226" fill="#f7f8fb" font-family="Arial, sans-serif" font-size="86" font-weight="800">PassNest</text>
+  <text x="86" y="292" fill="#c9ced8" font-family="Arial, sans-serif" font-size="38">Boarding passes, tickets, and service cards.</text>
+  <g transform="translate(680 95)">
+    <rect width="390" height="210" rx="28" fill="#0a84ff"/>
+    <text x="32" y="62" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="700">BOARDING</text>
+    <text x="32" y="130" fill="#fff" font-family="Arial, sans-serif" font-size="44" font-weight="800">Delhi to Bengaluru</text>
+    <text x="32" y="176" fill="#dff2ff" font-family="Arial, sans-serif" font-size="26">Economy · Seat 12A</text>
+  </g>
+  <g transform="translate(620 250)">
+    <rect width="390" height="210" rx="28" fill="#ff375f"/>
+    <text x="32" y="62" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="700">TICKET</text>
+    <text x="32" y="130" fill="#fff" font-family="Arial, sans-serif" font-size="44" font-weight="800">Evening concert</text>
+    <text x="32" y="176" fill="#ffe8ed" font-family="Arial, sans-serif" font-size="26">Saved and searchable</text>
+  </g>
+</svg>

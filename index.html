@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07080b">
+    <meta name="description" content="PassNest is a private digital wallet for boarding passes, tickets, and service cards.">
+    <meta property="og:title" content="PassNest">
+    <meta property="og:description" content="Save boarding passes, tickets, and service cards in a private web wallet.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./social-preview.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PassNest">
+    <meta name="twitter:description" content="A private digital pass wallet for travel, tickets, and services.">
+    <title>PassNest | Digital Pass Wallet</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./favicon.svg">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Wallet navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">P</div>
+          <div>
+            <h1>PassNest</h1>
+            <p>Travel, tickets, services</p>
+          </div>
+        </div>
+
+        <nav class="category-list" aria-label="Pass categories">
+          <button class="category-pill is-active" data-filter="all" type="button">
+            <span>All passes</span>
+            <strong id="count-all">0</strong>
+          </button>
+          <button class="category-pill" data-filter="boarding" type="button">
+            <span>Boarding</span>
+            <strong id="count-boarding">0</strong>
+          </button>
+          <button class="category-pill" data-filter="event" type="button">
+            <span>Tickets</span>
+            <strong id="count-event">0</strong>
+          </button>
+          <button class="category-pill" data-filter="service" type="button">
+            <span>Services</span>
+            <strong id="count-service">0</strong>
+          </button>
+        </nav>
+
+        <section class="sidebar-panel" aria-labelledby="security-title">
+          <h2 id="security-title">Private by design</h2>
+          <p>Saved in this browser with export and import controls for backup.</p>
+          <div class="backup-actions">
+            <button class="ghost-button" id="exportButton" type="button">Export</button>
+            <label class="ghost-button import-label" for="importInput">Import</label>
+            <input id="importInput" type="file" accept="application/json" hidden>
+          </div>
+          <nav class="site-links" aria-label="Website links">
+            <a href="./privacy.html">Privacy</a>
+            <a href="./terms.html">Terms</a>
+          </nav>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Digital pass wallet</p>
+            <h2>Everything you need at the gate, door, or desk.</h2>
+          </div>
+          <button class="primary-button" id="openFormButton" type="button">Add pass</button>
+        </header>
+
+        <section class="quick-stats" aria-label="Wallet summary">
+          <article>
+            <span>Upcoming</span>
+            <strong id="stat-upcoming">0</strong>
+          </article>
+          <article>
+            <span>Boarding passes</span>
+            <strong id="stat-boarding">0</strong>
+          </article>
+          <article>
+            <span>Saved services</span>
+            <strong id="stat-service">0</strong>
+          </article>
+        </section>
+
+        <div class="toolbar">
+          <label class="search-box">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Search airline, venue, booking ID...">
+          </label>
+          <label class="sort-box">
+            <span>Sort</span>
+            <select id="sortSelect">
+              <option value="date">Soonest first</option>
+              <option value="recent">Recently added</option>
+              <option value="name">Name A-Z</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="pass-grid" id="passGrid" aria-live="polite"></section>
+      </section>
+    </main>
+
+    <dialog class="pass-dialog" id="passDialog">
+      <form id="passForm" method="dialog">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">New saved item</p>
+            <h2>Add a pass</h2>
+          </div>
+          <button class="icon-button" id="closeFormButton" aria-label="Close form" type="button">x</button>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Type
+            <select name="type" required>
+              <option value="boarding">Boarding pass</option>
+              <option value="event">Event ticket</option>
+              <option value="service">Service card</option>
+            </select>
+          </label>
+          <label>
+            Provider
+            <input name="provider" required placeholder="Airline, venue, clinic, gym">
+          </label>
+          <label>
+            Title
+            <input name="title" required placeholder="Flight to Mumbai, Concert entry">
+          </label>
+          <label>
+            Date and time
+            <input name="dateTime" type="datetime-local" required>
+          </label>
+          <label>
+            Location
+            <input name="location" placeholder="Terminal, stadium, branch">
+          </label>
+          <label>
+            Reference
+            <input name="reference" required placeholder="PNR, booking ID, membership number">
+          </label>
+          <label class="boarding-field">
+            Class
+            <select name="travelClass">
+              <option value="">Select class</option>
+              <option value="Economy">Economy</option>
+              <option value="Premium Economy">Premium Economy</option>
+              <option value="Business">Business</option>
+              <option value="First">First</option>
+            </select>
+          </label>
+          <label class="boarding-field">
+            Seat number
+            <input name="seatNumber" placeholder="12A">
+          </label>
+          <label class="wide">
+            Notes
+            <textarea name="notes" rows="3" placeholder="Seat, gate, entry rules, benefits"></textarea>
+          </label>
+          <label class="wide">
+            Barcode or QR value
+            <input name="code" placeholder="Paste the scan code text">
+          </label>
+          <label class="wide boarding-field upload-field">
+            Upload boarding pass
+            <input name="attachment" type="file" accept="image/*,.pdf">
+            <span>Optional: save a PDF or image copy with this pass.</span>
+          </label>
+        </div>
+
+        <div class="dialog-actions">
+          <button class="ghost-button" id="resetDemoButton" type="button">Reset demo</button>
+          <button class="primary-button" type="submit">Save pass</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="detail-dialog" id="detailDialog">
+      <article id="detailCard"></article>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="PassNest icon">
+  <rect width="128" height="128" rx="28" fill="#07080b"/>
+  <rect x="22" y="24" width="84" height="80" rx="18" fill="url(#g)"/>
+  <path d="M44 43h25c14 0 23 8 23 20s-9 20-23 20H57v17H44V43Zm13 12v16h11c7 0 11-3 11-8s-4-8-11-8H57Z" fill="#07080b"/>
+  <defs>
+    <linearGradient id="g" x1="22" x2="106" y1="24" y2="104">
+      <stop stop-color="#fff"/>
+      <stop offset=".52" stop-color="#8fd7ff"/>
+      <stop offset="1" stop-color="#0a84ff"/>
+    </linearGradient>
+  </defs>
+</svg>
