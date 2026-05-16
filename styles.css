@@ -353,6 +353,30 @@ textarea {
   margin-top: 14px;
 }
 
+.pass-card.is-new {
+  z-index: 10;
+  outline: 3px solid rgba(255, 255, 255, 0.82);
+  outline-offset: 4px;
+  animation: saved-pass-pop 900ms ease both;
+}
+
+@keyframes saved-pass-pop {
+  0% {
+    transform: translateY(-18px) scale(0.98);
+    opacity: 0.2;
+  }
+
+  65% {
+    transform: translateY(-8px) scale(1.018);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
 .pass-card.boarding {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 34%),

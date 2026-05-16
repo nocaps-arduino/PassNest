@@ -1,4 +1,4 @@
-const CACHE_NAME = "passnest-v1";
+const CACHE_NAME = "passnest-v2";
 const APP_ASSETS = [
   "./",
   "./index.html",

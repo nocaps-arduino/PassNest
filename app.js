@@ -1,4 +1,5 @@
 const STORAGE_KEY = "passnest-wallet-v1";
+const MAX_ATTACHMENT_SIZE = 1.5 * 1024 * 1024;
 
 const passTypes = {
   boarding: "Boarding",
@@ -49,6 +50,7 @@ const demoPasses = [
 
 let passes = loadPasses();
 let activeFilter = "all";
+let highlightedPassId = "";
 
 const passGrid = document.querySelector("#passGrid");
 const passDialog = document.querySelector("#passDialog");
@@ -75,7 +77,7 @@ sortSelect.addEventListener("change", render);
 document.querySelectorAll(".category-pill").forEach((button) => {
   button.addEventListener("click", () => {
     activeFilter = button.dataset.filter;
-    document.querySelectorAll(".category-pill").forEach((item) => item.classList.toggle("is-active", item === button));
+    updateActiveCategory();
     render();
   });
 });
@@ -87,26 +89,50 @@ passForm.addEventListener("submit", async (event) => {
   delete pass.attachment;
 
   const attachmentFile = passForm.elements.attachment.files[0];
+  if (attachmentFile && attachmentFile.size > MAX_ATTACHMENT_SIZE) {
+    alert("That file is too large for browser-only storage. Please upload a PDF or image under 1.5 MB.");
+    return;
+  }
+
   const attachment = pass.type === "boarding" && attachmentFile ? await readAttachment(attachmentFile) : null;
   if (pass.type !== "boarding") {
     pass.travelClass = "";
     pass.seatNumber = "";
   }
 
+  const newPass = {
+    id: crypto.randomUUID(),
+    createdAt: Date.now(),
+    attachment,
+    ...pass
+  };
+
   passes = [
-    {
-      id: crypto.randomUUID(),
-      createdAt: Date.now(),
-      attachment,
-      ...pass
-    },
+    newPass,
     ...passes
   ];
-  savePasses();
+
+  try {
+    savePasses();
+  } catch {
+    passes = passes.filter((item) => item.id !== newPass.id);
+    alert("This pass could not be saved in browser storage. Try a smaller upload or export and clear old saved passes.");
+    return;
+  }
+
+  highlightedPassId = newPass.id;
+  activeFilter = "all";
+  searchInput.value = "";
+  sortSelect.value = "recent";
+  updateActiveCategory();
   passForm.reset();
   updateBoardingFields();
   passDialog.close();
   render();
+  window.setTimeout(() => {
+    highlightedPassId = "";
+    render();
+  }, 2200);
 });
 
 function loadPasses() {
@@ -159,7 +185,7 @@ function render() {
 
 function renderPassCard(pass) {
   return `
-    <article class="pass-card ${escapeHtml(pass.type)}">
+    <article class="pass-card ${escapeHtml(pass.type)} ${pass.id === highlightedPassId ? "is-new" : ""}">
       <div class="pass-card-header">
         <span class="pass-type">${passTypes[pass.type]}</span>
         <strong>${formatDate(pass.dateTime)}</strong>
@@ -173,6 +199,12 @@ function renderPassCard(pass) {
       </div>
     </article>
   `;
+}
+
+function updateActiveCategory() {
+  document.querySelectorAll(".category-pill").forEach((item) => {
+    item.classList.toggle("is-active", item.dataset.filter === activeFilter);
+  });
 }
 
 function openDetail(id) {
